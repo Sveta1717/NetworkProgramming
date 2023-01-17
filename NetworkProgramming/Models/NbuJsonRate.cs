@@ -15,7 +15,18 @@ namespace NetworkProgramming.Models
         public Single rate { get; set; }             // float
         public String cc { get; set; }
         public String exchangedate { get; set; }
+        
     }    
 }
+
+/*
+   {
+    "r030":36,							 
+    "txt":"Австралійський долар",		 
+    "rate":24.9416,						
+    "cc":"AUD",							
+    "exchangedate":"05.12.2022"			
+    },	
+ */
 
 

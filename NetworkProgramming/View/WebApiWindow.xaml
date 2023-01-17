@@ -25,7 +25,6 @@
 
         <ListView ItemsSource="{Binding Assets}"
                   Background="Honeydew"
-                  MouseDoubleClick="ListView_MouseDoubleClick"
                   Grid.Column="0" Grid.Row="1"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   MaxHeight="350">
@@ -37,13 +36,26 @@
                     <GridViewColumn 
                             Header="Id" 
                             DisplayMemberBinding="{Binding Path=id}"/>
+                    <GridViewColumn 
+                            Header="priceUsd"
+                            DisplayMemberBinding="{Binding Path=priceUsd}"/>
+                    <GridViewColumn 
+                            Header="Supply"
+                            DisplayMemberBinding="{Binding Path=supply}"/>
                 </GridView>
             </ListView.View>
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter
+                        Event="MouseDoubleClick"
+                        Handler="ListView_MouseDoubleClick"/>
+                </Style>
+            </ListView.Resources>
         </ListView>
 
         <Border Grid.Row="1" Grid.Column="1"
                 BorderBrush="SteelBlue" BorderThickness="2">
-            <Canvas x:Name="Graph"  />
+            <Canvas x:Name="Graph"/>
         </Border>
     </Grid>
 </Window>

@@ -17,11 +17,7 @@
             <Label HorizontalAlignment="Center" FontWeight="Bold" >
                 HTML
             </Label>
-            <Label HorizontalAlignment="Center">
-               Введить будь ласка дату 
-            </Label>
-            <TextBox x:Name="EnterDate" Width="190">                
-            </TextBox>
+            
             <WrapPanel>
                 <TextBox x:Name="textBoxUrl" Width="300">
                 https:itstep.org
@@ -40,9 +36,14 @@
                     GET XML
                 </Button>
             </WrapPanel>
+            <Label HorizontalAlignment="Center">
+                Введить будь ласка необхідну дату в форматі 2020.12.30
+            </Label>
+            <TextBox x:Name="EnterDate" Width="190">
+            </TextBox>
             <WrapPanel>
                 <TextBox x:Name="textBoxJsonUrl" Width="300">
-                    /NBUStatService/v1/statdirectory/exchange?json
+                    /NBUStatService/v1/statdirectory/exchange?json                   
                 </TextBox>
                 <Button x:Name="JsonRequestButon" Width="70"
                         Click="JsonRequestButon_Click">

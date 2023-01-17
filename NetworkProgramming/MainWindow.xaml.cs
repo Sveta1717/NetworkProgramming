@@ -52,5 +52,10 @@ namespace NetworkProgramming
             new View.SmtpWindow().ShowDialog();
             this.Show();
         }
+
+        private void HookButton_Click()
+        {
+
+        }
     }
 }

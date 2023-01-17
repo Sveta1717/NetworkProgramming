@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -31,6 +32,8 @@ namespace NetworkProgramming.View
         public HttpWindow()
         {
             InitializeComponent();
+            //EnterDate.Text = DateTime.Now.ToString();          
+           
         }
 
         private void HtmlRequestButon_Click(object sender, RoutedEventArgs e)
@@ -73,10 +76,7 @@ namespace NetworkProgramming.View
                 .DocumentElement                               // 
                 .SelectNodes("currency");                      // 
 
-            //TextBox textBox = new TextBox();
-            //TextWriter textWriter = new StringWriter();
-            //textWriter.Write(EnterDate.Text);
-           
+                      
                 if (currencies is null) return;                    // Проверка на успешный разбор документа
                           
                 
@@ -110,8 +110,8 @@ namespace NetworkProgramming.View
                                                                         // запятой. Для "сброса" єтого используем InvariantCulture
                     });
                      
-                    //node.ChildNodes[4].InnerText = EnterDate.Text;
-                   // EnterDate.AppendText(node.ChildNodes[4].InnerText);                   
+                    node.ChildNodes[4].InnerText = EnterDate.Text;
+                    EnterDate.AppendText(node.ChildNodes[4].InnerText);                   
                     item.Items.Add(new TreeViewItem { Header = "date: " + node.ChildNodes[4].InnerText });
                    
                     treeView1.Items.Add(item);               
@@ -124,9 +124,14 @@ namespace NetworkProgramming.View
             {                                                   // базового адресв: https://bank.gov.ua
                 BaseAddress = new Uri("https://bank.gov.ua")    // и запроса: /NBUStatService/v1/statdirectory/exchange?json                                                                   
             };                                                  // Использование await требует
-            textBlockResponse.Text = await                      // указать async в сигнатуре метода
-                httpClient.GetStringAsync(textBoxJsonUrl.Text); // но разрешает не использовать Dispatcher
+                                                                // textBlockResponse.Text = await                      // указать async в сигнатуре метода
+                                                                //httpClient.GetStringAsync(textBoxJsonUrl.Text); // но разрешает не использовать Dispatcher
                                                                 // а  также упрощает блок вместо Dispose
+
+            
+                textBlockResponse.Text = await                      
+                httpClient.GetStringAsync("/NBUStatService/v1/statdirectory/exchange?date=" + EnterDate.Text.Replace(".", "") + "&json");
+          
             ParseJsonRates();
         }
 
@@ -144,20 +149,21 @@ namespace NetworkProgramming.View
             
             foreach(Models.NbuJsonRate rate in ratesList)
             {
+                
                 if (rate.txt == "Долар США" || rate.txt == "Євро" || rate.txt == "Єна")
-                {
+                {                   
                     // создаем узел с сокращенным названием валюты
                     TreeViewItem item = new TreeViewItem()
                     {
                         Header = rate.cc
                     };
-
+                   
                     // заполняем узел под-узлами со всеми данными
                     item.Items.Add(new TreeViewItem { Header = rate.txt });
                     item.Items.Add(new TreeViewItem { Header = "rate^ " + rate.rate });
                     item.Items.Add(new TreeViewItem { Header = "r030^ " + rate.r030 });
                     item.Items.Add(new TreeViewItem { Header = rate.exchangedate });
-
+                    
                     // добавляем узел к "дереву"
                     treeView1.Items.Add(item);
                 }
