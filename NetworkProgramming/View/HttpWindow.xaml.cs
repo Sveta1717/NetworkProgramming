@@ -128,9 +128,8 @@ namespace NetworkProgramming.View
                                                                 //httpClient.GetStringAsync(textBoxJsonUrl.Text); // но разрешает не использовать Dispatcher
                                                                 // а  также упрощает блок вместо Dispose
 
-            //EnterDate.Text.Replace(".", "");
-                textBlockResponse.Text = await                      
-                httpClient.GetStringAsync("/NBUStatService/v1/statdirectory/exchange?date=" + EnterDate.Text.Replace(".", "") + "&json");
+           textBlockResponse.Text = await                      
+                httpClient.GetStringAsync("/NBUStatService/v1/statdirectory/exchange?date=" + EnterDate.Text.Replace(".", "") + "&json"); // удаляем точки
           
             ParseJsonRates();
         }
@@ -151,8 +150,7 @@ namespace NetworkProgramming.View
             {
                 
                 if (rate.txt == "Долар США" || rate.txt == "Євро" || rate.txt == "Єна")
-                {
-                    //rate.exchangedate = EnterDate.Text;                         // !!!!!!!!!!!!!
+                {                  
                     // создаем узел с сокращенным названием валюты
                     TreeViewItem item = new TreeViewItem()
                     {
