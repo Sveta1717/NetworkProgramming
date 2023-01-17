@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using System.Windows.Shapes;
 
 namespace NetworkProgramming.View
@@ -159,10 +160,25 @@ namespace NetworkProgramming.View
             });
         }
 
+        /// <summary>
+        /// Выбор валюты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("!");
-            
+            if (sender is ListViewItem item)
+            {
+                if (item.Content is Models.AssetModel assets)
+                {                    
+                        Graph.Children.Clear();
+                        coinTitle.Content = "";
+                        coinTitle.Content = ": " + assets.name;                     
+                   
+                    Task.Run(() => GetHistory(assets.id));
+                }
+            }
         }
     }
 }

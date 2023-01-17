@@ -23,7 +23,7 @@
         </Button>
         <Button x:Name="SmtpButton"
                 Click="SmtpButton_Click">
-            Smtp
+            SMTP
         </Button>
     </StackPanel>
 </Window>
